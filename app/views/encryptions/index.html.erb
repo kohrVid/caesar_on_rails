@@ -1,0 +1,18 @@
+<%= form_for(@encryption) do |f| %>
+	<table>
+		<tr>
+			<td><%= f.label :message%>	</td>
+		</tr>
+		<tr>
+			<td><%= f.text_area :message %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :shift %></td>
+		</tr>
+		<tr>
+			<td><%= f.select :shift, (-500..500), :selected => "1" %></td>
+		</tr>
+	</table>
+	<%= f.submit "Submit", :reload => true %>
+<%end%>
+<%= render 'encryptions/show' %>
