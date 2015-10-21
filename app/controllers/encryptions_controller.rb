@@ -8,23 +8,16 @@ class EncryptionsController < ApplicationController
 		@encryption = Encryption.new(encryption_params)
 
 		before = @encryption.message.unpack("C*")
-		after = before.map {|char| (char.to_i < 65 || char.to_i > 122 || (char.to_i > 90 && char.to_i < 97)) ? char.to_i : (@encryption.shift.to_i + char.to_i)}
+		after = before.map {|char| (char < 65 || char > 122 || (char > 90 && char < 97)) ? char : (@encryption.shift + char)}
 		@code = after.pack("C*")
 		if @encryption.save
 			render 'index'
 		else
-			render 'index'
+			redirect_to root_path
 		end
 	end
 
 
-#	def show
-		#@encryption = Encryption.find(params[:id])
-
-#	end
-
-#	def update
-#	end
 	
 
 	private

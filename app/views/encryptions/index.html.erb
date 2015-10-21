@@ -1,18 +1,31 @@
-<%= form_for(@encryption) do |f| %>
-	<table>
-		<tr>
-			<td><%= f.label :message%>	</td>
-		</tr>
-		<tr>
-			<td><%= f.text_area :message %></td>
-		</tr>
-		<tr>
-			<td><%= f.label :shift %></td>
-		</tr>
-		<tr>
-			<td><%= f.select :shift, (-500..500), :selected => "1" %></td>
-		</tr>
-	</table>
-	<%= f.submit "Submit", :reload => true %>
-<%end%>
-<%= render 'encryptions/show' %>
+<div class = "wrapper">
+	<div class = "col-md-6">
+		<%= form_for :encryption, :url => {:action => "create", :id => @encryption} do |f| %>
+			<table>
+				<tr>
+					<th>
+						<%= f.label :message %>
+					</th>
+					<th>
+						<%= f.label :shift %>
+					</th>
+
+				</tr>
+				<tr>
+					<td class = "col-md-5">
+						<%= f.text_area :message, rows: 5 %>
+					</td>
+					<td class = "col-md-2">
+						<%= f.select :shift, (-500..500), :selected => "1", class: "btn btn-info dropdown-toggle" %>
+					</td>
+				</tr>
+	
+			</table>
+			<br />
+			<%= f.submit "Submit", :reload => true, class: "btn btn-info" %>
+		<%end%>
+	</div>
+	<div class = "col-md-6">
+		<%= render 'encryptions/show' %>
+	</div>
+</div>
