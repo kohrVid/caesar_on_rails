@@ -6,31 +6,50 @@ class EncryptionsController < ApplicationController
 
 	def create
 		@encryption = Encryption.new(encryption_params)
+		upper_case = []
+		lower_case = []
+		(65..90).each do |i|
+			upper_case.push(i)
+		end
+		(97..122).each do |i|
+			lower_case.push(i)
+		end
 
 		before = @encryption.message.unpack("C*")
 		after = before.map {|char| 
 			result = @encryption.shift  + char
-			if char < 65 || char > 122 || (char > 90 && char < 97)
+
+			if !(upper_case.include?(char) || lower_case.include?(char))
 				char
-			else
-				if (result >90 && result < 97)||(result >122)||(result < 65)
-=begin
-					if (result > 64 && result < 91) || (result > 96 && result < 123) #Upper/Lower-case
-						if @encryption.shift > -1
-							result += 256
-						elsif
-							@encryption.shift < 0
-							result -= 256
-						end
+			elsif upper_case.include?(result) || lower_case.include?(result)
+				if !( (upper_case.include?(char) && lower_case.include?(result)) || (lower_case.include?(char) && upper_case.include?(result)) )
+					result 
+				elsif upper_case.include?(char)
+					if @encryption.shift < 0
+						result += (upper_case[-1] - (upper_case[0]-1))
 					else
-						result += 230
+						result += (upper_case[0] - (upper_case[-1]+1))
 					end
-=end
-result += 224
-				else
-					result
+				elsif lower_case.include?(char)
+					if @encryption.shift < 0
+						result += (lower_case[-1] - (lower_case[0]-1))
+					else
+						result += (lower_case[0] - (lower_case[-1]+1))
+					end
 				end
-			end			
+			elsif upper_case.include?(char)
+				if @encryption.shift < 0
+					result += (upper_case[-1] - (upper_case[0]-1))
+				else
+					result += (upper_case[0] - (upper_case[-1]+1))
+				end
+			elsif lower_case.include?(char)
+				if @encryption.shift < 0
+					result += (lower_case[-1] - (lower_case[0]-1))
+				else
+					result += (lower_case[0] - (lower_case[-1]+1))
+				end
+			end
 		}
 		@code = after.pack("C*")
 		if @encryption.save
