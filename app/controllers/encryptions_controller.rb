@@ -26,28 +26,28 @@ class EncryptionsController < ApplicationController
 					result 
 				elsif upper_case.include?(char)
 					if @encryption.shift < 0
-						result += (upper_case[-1] - (upper_case[0]-1))
+						result + (upper_case[-1] - (upper_case[0]-1))
 					else
-						result += (upper_case[0] - (upper_case[-1]+1))
+						result + (upper_case[0] - (upper_case[-1]+1))
 					end
 				elsif lower_case.include?(char)
 					if @encryption.shift < 0
-						result += (lower_case[-1] - (lower_case[0]-1))
+						result + (lower_case[-1] - (lower_case[0]-1))
 					else
-						result += (lower_case[0] - (lower_case[-1]+1))
+						result + (lower_case[0] - (lower_case[-1]+1))
 					end
 				end
 			elsif upper_case.include?(char)
 				if @encryption.shift < 0
-					result += (upper_case[-1] - (upper_case[0]-1))
+					result + (upper_case[-1] - (upper_case[0]-1))
 				else
-					result += (upper_case[0] - (upper_case[-1]+1))
+					result + (upper_case[0] - (upper_case[-1]+1))
 				end
 			elsif lower_case.include?(char)
 				if @encryption.shift < 0
-					result += (lower_case[-1] - (lower_case[0]-1))
+					result + (lower_case[-1] - (lower_case[0]-1))
 				else
-					result += (lower_case[0] - (lower_case[-1]+1))
+					result + (lower_case[0] - (lower_case[-1]+1))
 				end
 			end
 		}
